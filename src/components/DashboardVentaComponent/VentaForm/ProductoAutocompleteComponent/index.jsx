@@ -8,12 +8,13 @@ import {
 } from "@mui/material";
 
 const ProductoAutocompleteComponent = ({
-  productosUnicosFiltrados,
   handleProductoChange,
   setCantidad,
   setCantidadPorUnidad,
   productosConTotales,
 }) => {
+  console.log(productosConTotales);
+
   const [inputValue, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState(null);
 
@@ -23,7 +24,7 @@ const ProductoAutocompleteComponent = ({
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      const matchedProduct = productosUnicosFiltrados.find(
+      const matchedProduct = productosConTotales.find(
         (producto) =>
           producto.codigo_barra &&
           producto.codigo_barra.toLowerCase() === inputValue.toLowerCase()

@@ -7,14 +7,12 @@ import RegistroTableComponent from "./RegistroTableComponent";
 import ProveedorModalComponent from "./ProveedorModalComponent";
 import ProductoModalComponent from "./ProductoModalComponent";
 import useStyles from "./RegisterBuy.styles";
-// import detalleCompraAddServices from "../../async/services/post/detalleCompraAddServices";
-// import loteAddServices from "../../async/services/post/loteAddServices";
-// import buyLoteService from "../../async/services/get/buyLoteService";
 import { useMutation, useQuery } from "react-query";
 import { getLocalDateTime } from "../../utils/getDate";
 import { MainContext } from "../../context/MainContext";
 import { Typography } from "@mui/material";
 import buyAddService from "../../async/services/post/buyAddService";
+import ImportBuyComponent from "../ImportBuyComponent";
 
 const RegisterBuyComponent = ({
   products,
@@ -202,7 +200,7 @@ const RegisterBuyComponent = ({
                 margin: "2rem 0 .5rem 0",
               }}
             >
-              Registro de Lote
+              Registro de compra
             </Typography>
             <ProductoProveedorForm
               setProductoName={setProductoName}
@@ -329,6 +327,11 @@ const RegisterBuyComponent = ({
           {snackbar.message}
         </Alert>
       </Snackbar>
+      {/* <ImportBuyComponent
+        refetchProducts={refetchProducts}
+        refetchProveedores={refetchProveedores}
+        refetchLote={refetchLote}
+      /> */}
     </Box>
   );
 };

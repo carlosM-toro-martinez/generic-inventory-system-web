@@ -142,7 +142,7 @@ function FormProduct({ handleClose, refetchProducts, productData }) {
               className={classes.input}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ display: "none" }}>
             <TextField
               label="Cant. caj/paq"
               name="cantCaja"

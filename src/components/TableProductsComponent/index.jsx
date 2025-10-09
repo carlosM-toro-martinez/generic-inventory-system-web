@@ -164,6 +164,7 @@ export default function TableProductsComponent({
       <Box
         sx={{
           display: "flex",
+          flexDirection: "row",
           gap: 2,
           justifyContent: "space-between",
           flexWrap: "wrap",

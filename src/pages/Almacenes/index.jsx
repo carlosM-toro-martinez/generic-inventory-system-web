@@ -9,6 +9,8 @@ import TableCategoriasComponent from "../../components/TableCategoriasComponent"
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import proveedoresService from "../../async/services/get/proveedoresService";
+import CsvGeneratorComponent from "../../components/CsvGeneratorComponent";
+import ImportProducts from "../../components/ImportProducts";
 
 function Almacenes() {
   const navigate = useNavigate();
@@ -76,9 +78,15 @@ function Almacenes() {
               proveedoresData={proveedoresData}
             />
           ) : (
-            <Typography variant="body1">
-              Aún no existen productos registrados.
-            </Typography>
+            <Box>
+              <Typography variant="body1">
+                Aún no existen productos registrados.
+              </Typography>
+
+              <CsvGeneratorComponent />
+
+              <ImportProducts />
+            </Box>
           )
         ) : null}
 
@@ -101,7 +109,11 @@ function Almacenes() {
               refetchCategorias={refetchCategoria}
             />
           ) : (
-            <Typography variant="body1">Aún no existen categorías.</Typography>
+            <Box>
+              <Typography variant="body1">
+                Aún no existen categorías.
+              </Typography>
+            </Box>
           )
         ) : null}
 
