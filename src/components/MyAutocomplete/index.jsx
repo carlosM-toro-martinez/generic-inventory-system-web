@@ -252,7 +252,10 @@ export default function MyAutocomplete({
                     fontWeight: selected === opt ? 500 : 400,
                   }}
                 >
-                  {getOptionLabel(opt)}
+                  {getOptionLabel(opt)}{" "}
+                  <span className={classes.itemCount}>
+                    {opt?.codigo_barra ?? 0}
+                  </span>
                 </li>
               ))}
             </Paper>

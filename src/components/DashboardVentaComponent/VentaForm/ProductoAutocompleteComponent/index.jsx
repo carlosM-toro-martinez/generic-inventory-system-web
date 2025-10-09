@@ -125,7 +125,7 @@ const ProductoAutocompleteComponent = ({
                   variant="body1"
                   sx={{ fontWeight: 510, color: "#000", textAlign: "center" }}
                 >
-                  {nombre} {forma} {conc}
+                  {nombre} {forma} {conc} {cod}
                   {/* <Typography
                     component="span"
                     variant="body1"
