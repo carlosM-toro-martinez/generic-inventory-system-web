@@ -81,9 +81,13 @@ export default function TableProductsComponent({
   };
 
   const filteredProducts = productos
-    .filter((producto) =>
-      producto.nombre?.toLowerCase().includes(searchQuery.toLowerCase())
-    )
+    .filter((producto) => {
+      const query = searchQuery.toLowerCase();
+      const nombre = producto.nombre?.toLowerCase() || "";
+      const codigo = producto.codigo_barra?.toLowerCase() || "";
+
+      return nombre.includes(query) || codigo.includes(query);
+    })
     .sort((a, b) => {
       if (!showMissingOnly) return 0;
       const aVal = a.subCantidad ?? Infinity;
@@ -208,7 +212,6 @@ export default function TableProductsComponent({
             <TableBody>
               {visibleRows.map((row, index) => {
                 const isEvenRow = index % 2 === 0;
-                console.log("Row data:", row);
                 return (
                   <TableRow
                     hover

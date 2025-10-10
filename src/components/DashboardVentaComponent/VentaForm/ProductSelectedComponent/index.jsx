@@ -210,9 +210,9 @@ const ProductSelectedComponent = ({
           <TableRow className={classes.tableHeader}>
             {[
               "Producto",
-              "uso rest.",
-              "Precio",
+              "Precio U.",
               "Cant. por unidad",
+              "Precio Total",
               "Stock",
               "Eliminar",
             ].map((header, index) => (
@@ -230,11 +230,29 @@ const ProductSelectedComponent = ({
         </TableHead>
         <TableBody>
           {Array.isArray(productosDetallados) &&
-            productosDetallados?.length > 0 &&
-            productosDetallados?.map((producto, index) => {
+            productosDetallados.length > 0 &&
+            productosDetallados.map((producto, index) => {
               const { cantUnitLimit, pesoLimit, newValue, metodoSeleccionado } =
                 producto;
-              const totalSubCantidad = producto?.newValue?.totalSubCantidad;
+              const totalSubCantidad = newValue?.totalSubCantidad;
+
+              const currentPrice =
+                newValue?.metodoVentaBase?.precio ?? newValue?.precio ?? 0;
+
+              const handlePriceChange = (e) => {
+                const updatedPrice = parseFloat(e.target.value) || 0;
+
+                const updatedProductos = [...productosDetallados];
+
+                if (updatedProductos[index].newValue.metodoVentaBase) {
+                  updatedProductos[index].newValue.metodoVentaBase.precio =
+                    updatedPrice;
+                } else {
+                  updatedProductos[index].newValue.precio = updatedPrice;
+                }
+
+                setProductosDetallados(updatedProductos);
+              };
 
               return (
                 <TableRow key={index}>
@@ -246,8 +264,69 @@ const ProductSelectedComponent = ({
                     }}
                   >
                     {newValue?.nombre} {newValue?.forma_farmaceutica}{" "}
-                    {newValue?.concentracion}
+                    {newValue?.concentracion} {newValue?.codigo_barra}
                   </TableCell>
+
+                  <TableCell
+                    sx={{
+                      color: "green",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <TextField
+                      type="number"
+                      value={currentPrice}
+                      onChange={handlePriceChange}
+                      sx={{
+                        width: "10ch",
+                        "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
+                          {
+                            WebkitAppearance: "none",
+                            margin: 0,
+                          },
+                        "& input[type=number]": {
+                          MozAppearance: "textfield",
+                        },
+                      }}
+                      inputProps={{ min: 0 }}
+                    />{" "}
+                    Bs
+                  </TableCell>
+
+                  <TableCell>
+                    {cantUnitLimit !== 0 && pesoLimit <= 0 && (
+                      <TextField
+                        type="number"
+                        value={producto.cantidadPorUnidad || ""}
+                        onChange={(e) =>
+                          handleInputChange(
+                            index,
+                            "cantidadPorUnidad",
+                            parseInt(e.target.value),
+                            totalSubCantidad
+                          )
+                        }
+                        sx={{
+                          width: "10ch",
+                          "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
+                            {
+                              WebkitAppearance: "none",
+                              margin: 0,
+                            },
+                          "& input[type=number]": {
+                            MozAppearance: "textfield",
+                          },
+                        }}
+                        inputProps={{
+                          max: totalSubCantidad,
+                        }}
+                        fullWidth={false}
+                      />
+                    )}
+                  </TableCell>
+
+                  {/* ===== Total ===== */}
                   <TableCell
                     sx={{
                       textTransform: "capitalize",
@@ -255,50 +334,9 @@ const ProductSelectedComponent = ({
                       fontSize: "1rem",
                     }}
                   >
-                    {newValue?.uso_res ? "si" : "no"}{" "}
-                  </TableCell>
-                  <TableCell sx={{ color: "green" }}>
-                    <>
-                      {producto.newValue.metodoVentaBase
-                        ? producto.newValue.metodoVentaBase.precio
-                        : producto.newValue.precio}{" "}
-                      Bs
-                    </>
+                    {(producto.cantidadPorUnidad || 0) * currentPrice}
                   </TableCell>
 
-                  <TableCell>
-                    {cantUnitLimit !== 0 && pesoLimit <= 0 && (
-                      <>
-                        <TextField
-                          type="number"
-                          value={producto.cantidadPorUnidad || ""}
-                          onChange={(e) =>
-                            handleInputChange(
-                              index,
-                              "cantidadPorUnidad",
-                              parseInt(e.target.value),
-                              totalSubCantidad
-                            )
-                          }
-                          sx={{
-                            width: "10ch",
-                            "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button":
-                              {
-                                WebkitAppearance: "none",
-                                margin: 0,
-                              },
-                            "& input[type=number]": {
-                              MozAppearance: "textfield",
-                            },
-                          }}
-                          inputProps={{
-                            max: totalSubCantidad,
-                          }}
-                          fullWidth={false}
-                        />
-                      </>
-                    )}
-                  </TableCell>
                   <TableCell
                     sx={{
                       alignItems: "center",
@@ -311,7 +349,7 @@ const ProductSelectedComponent = ({
                         alignItems: "center",
                         backgroundColor: "#66cc66",
                         width: "40%",
-                        padding: ".5rem 0 .5rem 0",
+                        padding: ".5rem 0",
                         borderRadius: "1rem",
                         fontWeight: "bold",
                       }}
@@ -319,12 +357,9 @@ const ProductSelectedComponent = ({
                       {totalSubCantidad}
                     </Box>
                   </TableCell>
+
                   <TableCell>
-                    <Button
-                      onClick={() => handleDelete(index)}
-                      //variant="contained"
-                      color="error"
-                    >
+                    <Button onClick={() => handleDelete(index)} color="error">
                       <CloseIcon sx={{ color: "red", fontSize: "2rem" }} />
                     </Button>
                   </TableCell>

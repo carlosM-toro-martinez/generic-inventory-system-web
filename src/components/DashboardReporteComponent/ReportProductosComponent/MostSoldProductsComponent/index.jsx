@@ -76,20 +76,6 @@ function MostSoldProductsComponent() {
                     {producto.detallesVenta.length} ventas registradas
                   </Typography>
                 </Box>
-
-                {/* <Button
-                  variant="outlined"
-                  color="primary"
-                  size="small"
-                  startIcon={<ShoppingCart />}
-                  sx={{ mt: 2 }}
-                  onClick={() => {
-                    // Aquí puedes abrir un modal, navegación, etc.
-                    console.log("Ver ventas de:", producto.id_producto);
-                  }}
-                >
-                  Ver ventas
-                </Button> */}
               </CardContent>
             </Card>
           </Grid>

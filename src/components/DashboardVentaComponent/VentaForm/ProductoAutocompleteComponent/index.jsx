@@ -13,8 +13,6 @@ const ProductoAutocompleteComponent = ({
   setCantidadPorUnidad,
   productosConTotales,
 }) => {
-  console.log(productosConTotales);
-
   const [inputValue, setInputValue] = useState("");
   const [selectedValue, setSelectedValue] = useState(null);
 
