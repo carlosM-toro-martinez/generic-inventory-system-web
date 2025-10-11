@@ -134,6 +134,7 @@ function ModalViewProduct({
     const utilidadUnidad = precioVentaUnidad - costoUnitario;
     return Number(utilidadUnidad.toFixed(2));
   };
+  console.log(data.inventarios);
 
   return (
     <Dialog
@@ -191,20 +192,7 @@ function ModalViewProduct({
                       product.precio
                     )}
                   </TableCell>
-                  <TableCell>
-                    {editingRow === index ? (
-                      <TextField
-                        value={editedSalePrice}
-                        onChange={(e) => setEditedSalePrice(e.target.value)}
-                        type="number"
-                        variant="outlined"
-                        size="small"
-                        sx={{ width: "8rem" }}
-                      />
-                    ) : (
-                      product.precio ?? 0
-                    )}
-                  </TableCell>
+                  <TableCell>{product.precio ?? 0}</TableCell>
                   <TableCell sx={{ color: "orange" }}>
                     {inventario?.fecha_caducidad
                       ?.split("T")[0]
@@ -294,7 +282,8 @@ function ModalViewProduct({
                             handleEdit(
                               index,
                               inventario.detalleCompra.precio_unitario,
-                              inventario.precioVenta
+                              inventario.precioVenta,
+                              inventario?.detalleCompra?.proveedor?.id_proveedor
                             )
                           }
                           size="small"
