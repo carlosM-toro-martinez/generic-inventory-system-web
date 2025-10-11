@@ -28,9 +28,28 @@ function Ventas() {
   const { data, user } = useContext(MainContext);
 
   const sumarTotalPorQR = (ventas) => {
-    return ventas
-      .filter((venta) => venta.metodo_pago === "QR")
-      .reduce((acc, venta) => acc + parseFloat(venta.total), 0);
+    const parseNumber = (v) => {
+      if (v === null || v === undefined || v === "") return 0;
+      const normalized = String(v).trim().replace(/\s+/g, "").replace(",", ".");
+      const n = parseFloat(normalized);
+      return isNaN(n) ? 0 : n;
+    };
+
+    const sum = ventas
+      .filter(
+        (venta) =>
+          venta?.metodo_pago === "QR" || parseNumber(venta?.rebaja_aplicada) > 0
+      )
+      .reduce((acc, venta) => {
+        const rebaja = parseNumber(venta.rebaja_aplicada);
+        if (rebaja > 0) {
+          return acc + rebaja;
+        }
+        const total = parseNumber(venta.total);
+        return acc + total;
+      }, 0);
+
+    return Math.round((sum + Number.EPSILON) * 100) / 100;
   };
 
   const sumarTotalContado = (ventas) => {

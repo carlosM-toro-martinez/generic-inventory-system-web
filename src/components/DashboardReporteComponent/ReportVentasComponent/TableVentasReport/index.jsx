@@ -338,7 +338,9 @@ function VentaRow({ venta, ventaToday, refetchVentas, caja, utilidades }) {
           venta.cliente.apellido ? venta?.cliente?.apellido : ""
         }`}</TableCell>
         <TableCell>{venta?.trabajadorVenta?.nombre}</TableCell>
-        <TableCell>{venta?.metodo_pago}</TableCell>
+        <TableCell>
+          {venta?.rebaja_aplicada > 0 ? "Contado y QR" : venta?.metodo_pago}
+        </TableCell>
 
         <TableCell>{venta.total}</TableCell>
         {ventaToday ? (

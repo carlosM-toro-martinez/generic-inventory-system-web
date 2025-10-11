@@ -116,7 +116,6 @@ const RegistroTableComponent = ({
               <TableCell style={{ fontWeight: "bold" }}>
                 Precio Unitario (compra)
               </TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Precio Venta</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Precio Total</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>Acciones</TableCell>
             </TableRow>
@@ -138,7 +137,6 @@ const RegistroTableComponent = ({
                   {"u"}
                 </TableCell>
                 <TableCell>{registro?.precio_unitario} Bs</TableCell>
-                <TableCell>{registro?.precioVenta} Bs</TableCell>
                 <TableCell>
                   {registro?.cantidad > 0
                     ? calcularPrecioTotal(registro).toFixed(2)

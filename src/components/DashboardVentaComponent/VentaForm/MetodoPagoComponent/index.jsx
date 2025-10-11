@@ -17,6 +17,7 @@ function MetodoPagoComponent({ metodoPago, setMetodoPago }) {
         label="Método de Pago"
       >
         <MenuItem value="Contado">Contado</MenuItem>
+        <MenuItem value="QrAndCash">Contado y QR</MenuItem>
         {/* <MenuItem value="Prestamo">Préstamo</MenuItem>
         <MenuItem value="Consignacion">Consignación</MenuItem> */}
         <MenuItem value="QR">QR</MenuItem>

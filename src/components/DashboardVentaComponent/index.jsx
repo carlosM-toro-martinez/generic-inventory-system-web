@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Button, Grid, Box, Snackbar, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Box,
+  Snackbar,
+  Typography,
+  TextField,
+} from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { useMutation } from "react-query";
 import ClientModal from "./ClientModal";
@@ -53,6 +60,9 @@ function DashboardVentaComponent({
   const [isProcessing, setIsProcessing] = useState(false);
   const [shouldMutate, setShouldMutate] = useState(false);
   const [metodoPago, setMetodoPago] = useState("Contado");
+  const [amountGiven, setAmountGiven] = useState("");
+  const [pagoQR, setPagoQR] = useState("");
+  const [pagoContado, setPagoContado] = useState("");
   const handleOpenClientModal = () => setOpenClientModal(true);
   const handleCloseClientModal = () => setOpenClientModal(false);
 
@@ -123,12 +133,12 @@ function DashboardVentaComponent({
       const payload = {
         ventaData: {
           fecha_venta: getLocalDateTime(),
-          total: totalPrice,
+          total: metodoPago === "QrAndCash" ? pagoContado : totalPrice,
           id_cliente: ventaData.clienteId,
           id_trabajador: ventaData.id_trabajador,
-          rebaja_aplicada: 0,
+          rebaja_aplicada: metodoPago === "QrAndCash" ? pagoQR : 0,
           descuento_fidelidad_aplicado: 0,
-          metodo_pago: metodoPago,
+          metodo_pago: metodoPago === "QrAndCash" ? "Contado" : metodoPago,
         },
         id_caja: caja?.caja?.id_caja || 1,
         detalles: productosSeleccionados.map((p) => ({
@@ -146,7 +156,6 @@ function DashboardVentaComponent({
           cantidadMetod: p.metodo ? p.metodo.cantidad_por_metodo : null,
         })),
       };
-      console.log(payload);
 
       if (movimientoInventario) {
         return salidaInventarioAddService(payload);
@@ -167,6 +176,10 @@ function DashboardVentaComponent({
         refetchCaja();
         if (cancelForm) cancelForm();
         if (setRestoreDenom) setRestoreDenom();
+        setAmountGiven("");
+        setMetodoPago("Contado");
+        setPagoQR("");
+        setPagoContado("");
       },
       onError: (error) => {
         setProductosSeleccionados([]);
@@ -456,6 +469,67 @@ function DashboardVentaComponent({
           />
         </Grid>
       </Grid>
+      {metodoPago === "QrAndCash" && (
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            alignItems: "center",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            padding: 2,
+            background: "#f9fafb",
+            borderRadius: 2,
+            boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+            maxWidth: 400,
+            margin: "0 auto",
+          }}
+        >
+          <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <Typography
+              variant="subtitle2"
+              sx={{ color: "text.secondary", marginBottom: 0.5 }}
+            >
+              Pago QR
+            </Typography>
+            <TextField
+              type="number"
+              variant="outlined"
+              size="small"
+              placeholder="Monto en Bs"
+              value={pagoQR}
+              onChange={(e) => setPagoQR(e.target.value)}
+              fullWidth
+              inputProps={{
+                min: 0,
+                step: "0.01", // permite decimales
+              }}
+            />
+          </Box>
+
+          <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+            <Typography
+              variant="subtitle2"
+              sx={{ color: "text.secondary", marginBottom: 0.5 }}
+            >
+              Pago al contado
+            </Typography>
+            <TextField
+              type="number"
+              variant="outlined"
+              size="small"
+              placeholder="Monto en Bs"
+              value={pagoContado}
+              onChange={(e) => setPagoContado(e.target.value)}
+              fullWidth
+              inputProps={{
+                min: 0,
+                step: "0.01",
+              }}
+            />
+          </Box>
+        </Box>
+      )}
       <Box
         sx={{
           margin: ".5rem 0 2rem 0",
@@ -465,11 +539,19 @@ function DashboardVentaComponent({
           alignItems: "start",
         }}
       >
-        <CalculatorComponent totalPrice={totalPrice} />
+        {metodoPago === "Contado" && (
+          <CalculatorComponent
+            totalPrice={totalPrice}
+            amountGiven={amountGiven}
+            setAmountGiven={setAmountGiven}
+          />
+        )}
+
         <Button variant="contained" color="primary" onClick={handleSubmit}>
           {movimientoInventario ? "Registrar Movimiento" : "Registrar Venta"}
         </Button>
       </Box>
+
       <ClientModal
         refetchClients={refetchClients}
         open={openClientModal}

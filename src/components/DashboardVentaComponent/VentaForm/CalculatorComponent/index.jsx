@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { TextField, Typography, Box, Paper } from "@mui/material";
 import useStyles from "./calculator.styles";
 
-function CalculatorComponent({ totalPrice }) {
+function CalculatorComponent({ totalPrice, amountGiven, setAmountGiven }) {
   const classes = useStyles();
-  const [amountGiven, setAmountGiven] = useState("");
   const change = parseFloat(amountGiven) - totalPrice;
 
   const handleInputChange = (e) => {

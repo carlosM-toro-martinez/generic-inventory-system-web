@@ -137,9 +137,12 @@ export default function MyAutocomplete({
   const filtered =
     inputValue.trim() === ""
       ? options
-      : options.filter((opt) =>
-          getOptionLabel(opt).toLowerCase().includes(inputValue.toLowerCase())
-        );
+      : options.filter((opt) => {
+          const nombre = getOptionLabel(opt)?.toLowerCase() ?? "";
+          const codigo = opt?.codigo_barra?.toString().toLowerCase() ?? "";
+          const search = inputValue.toLowerCase();
+          return nombre.includes(search) || codigo.includes(search);
+        });
 
   function selectOption(opt) {
     setSelected(opt);
@@ -208,7 +211,6 @@ export default function MyAutocomplete({
           className={classes.input}
           value={inputValue}
           onChange={handleInput}
-          onFocus={handleFocus}
           onClick={handleFocus}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
