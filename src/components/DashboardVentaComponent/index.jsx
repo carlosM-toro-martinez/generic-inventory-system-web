@@ -547,7 +547,7 @@ function DashboardVentaComponent({
           />
         )}
 
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
+        <Button variant="contained" color="primary" onClick={handleSubmit} disabled={ventaMutation.isLoading}>
           {movimientoInventario ? "Registrar Movimiento" : "Registrar Venta"}
         </Button>
       </Box>

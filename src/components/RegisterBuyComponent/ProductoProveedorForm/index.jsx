@@ -105,31 +105,6 @@ const ProductoProveedorForm = ({
         error={errors.producto}
         sx={{ minWidth: 200, flexShrink: 0 }}
       >
-        {/* <Autocomplete
-          key="autocomplete-productos"
-          options={productosMemo}
-          getOptionLabel={(opt) =>
-            `${opt?.nombre || ""} ${opt?.forma_farmaceutica || ""} ${
-              opt?.concentracion || ""
-            }`
-          }
-          filterOptions={(opts, { inputValue }) =>
-            opts.filter((p) =>
-              p.nombre?.toLowerCase().includes(inputValue.toLowerCase())
-            )
-          }
-          isOptionEqualToValue={(opt, val) =>
-            opt.id_producto === val.id_producto
-          }
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Producto"
-              variant="outlined"
-              size="small"
-            />
-          )}
-        /> */}
         <MyAutocomplete
           options={productos}
           getOptionLabel={(opt) =>
@@ -150,7 +125,7 @@ const ProductoProveedorForm = ({
           setProductoSelected={setProductoSelected}
         />
       </FormControl>
-      <Box
+      {/* <Box
         sx={{
           flexBasis: { xs: "100%", sm: "50%", md: "33.33%", lg: "15%" },
           display: "flex",
@@ -179,7 +154,7 @@ const ProductoProveedorForm = ({
             setLote(e.target.value);
           }}
         />
-      </Box>
+      </Box> */}
 
       <FormControl size="small" sx={{ minWidth: 200, flexShrink: 0 }}>
         <Autocomplete
@@ -203,11 +178,12 @@ const ProductoProveedorForm = ({
           renderInput={(params) => <TextField {...params} label="Proveedor" />}
         />
       </FormControl>
-      <Box
+      {/* <Box
         sx={{
           flexBasis: { xs: "100%", sm: "50%", md: "33.33%", lg: "15%" },
           minWidth: 250,
         }}
+        style={{ display: "none" }}
       >
         <TextField
           variant="outlined"
@@ -219,7 +195,7 @@ const ProductoProveedorForm = ({
           InputLabelProps={{ shrink: true }}
           fullWidth
         />
-      </Box>
+      </Box> */}
     </Box>
   );
 };

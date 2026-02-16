@@ -28,7 +28,7 @@ const RegisterBuyComponent = ({
   const [lote, setLote] = useState("");
   const [loteNumber, setLoteNumber] = useState("");
   const [fechaIngreso, setFechaIngreso] = useState("");
-  const [fechaCaducidad, setFechaCaducidad] = useState("");
+  const [fechaCaducidad, setFechaCaducidad] = useState("2030-01-01");
   const [proveedor, setProveedor] = useState("");
   const [producto, setProducto] = useState("");
   const [productoSelected, setProductoSelected] = useState("");
@@ -86,7 +86,6 @@ const RegisterBuyComponent = ({
     setLoteNumber(lote);
     setIsLoteProveedorLocked(true);
     setFechaIngreso("");
-    setFechaCaducidad("");
     setCantidad("");
     setPrecio("");
     setSubCantidad(null);
@@ -301,6 +300,7 @@ const RegisterBuyComponent = ({
               setRegistroCombinado={setRegistroCombinado}
               handleFinalize={handleFinalize}
               numeroLote={loteNumber}
+              isFinalizing={buyMutation.isLoading}
             />
           </Grid>
         </Grid>

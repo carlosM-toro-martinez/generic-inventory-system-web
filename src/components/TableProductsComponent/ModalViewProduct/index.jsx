@@ -158,13 +158,13 @@ function ModalViewProduct({
           <Table>
             <TableHead sx={{ backgroundColor: "#f5f5f5" }}>
               <TableRow>
-                <TableCell>Número de Lote</TableCell>
+                {/* <TableCell>Número de Lote</TableCell> */}
                 {/* <TableCell>Cantidad (c/p)</TableCell> */}
                 {/* <TableCell>cant. por caja</TableCell> */}
                 <TableCell>Unidades</TableCell>
                 <TableCell>Utilidades p(u)</TableCell>
                 <TableCell>Precio de venta(u)</TableCell>
-                <TableCell>Caducidad</TableCell>
+                {/* <TableCell>Caducidad</TableCell> */}
                 <TableCell>Ingreso</TableCell>
                 <TableCell>Precio de compra(c)</TableCell>
                 <TableCell>Proveedor</TableCell>
@@ -175,7 +175,7 @@ function ModalViewProduct({
             <TableBody>
               {data.inventarios.map((inventario, index) => (
                 <TableRow key={index}>
-                  <TableCell>{inventario.numero_lote}</TableCell>
+                  {/* <TableCell>{inventario.numero_lote}</TableCell> */}
                   {/* <TableCell>
                     {inventario.cantidad > 0 && inventario.subCantidad === 0
                       ? inventario.subCantidad
@@ -193,13 +193,13 @@ function ModalViewProduct({
                     )}
                   </TableCell>
                   <TableCell>{product.precio ?? 0}</TableCell>
-                  <TableCell sx={{ color: "orange" }}>
+                  {/* <TableCell sx={{ color: "orange" }}>
                     {inventario?.fecha_caducidad
                       ?.split("T")[0]
                       ?.split("-")
                       .reverse()
                       .join("/")}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     {inventario?.fecha_ingreso
                       ?.split("T")[0]

@@ -100,11 +100,11 @@ function DashboardInicioComponent() {
           ))}
         </Box>
       </Box>
-      <Box sx={{ marginTop: "2rem" }}>
+      {/* <Box sx={{ marginTop: "2rem" }}>
         <Paper>
           <MetricsMainComponent />
         </Paper>
-      </Box>
+      </Box> */}
     </>
   );
 }

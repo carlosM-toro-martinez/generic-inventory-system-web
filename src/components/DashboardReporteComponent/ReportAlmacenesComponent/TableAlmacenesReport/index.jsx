@@ -56,7 +56,7 @@ function Row({ row }) {
                 <TableHead>
                   <TableRow>
                     <TableCell>Producto</TableCell>
-                    <TableCell>Nº Lote</TableCell>
+                    <TableCell>Codigo</TableCell>
                     <TableCell>Fecha Ingreso</TableCell>
                     <TableCell>Fecha Caducidad</TableCell>
                     <TableCell>Cantidad</TableCell>
@@ -71,7 +71,7 @@ function Row({ row }) {
                       <TableCell>
                         {lote.detalleCompra.producto.nombre}
                       </TableCell>
-                      <TableCell>{lote.numero_lote}</TableCell>
+                      <TableCell>{lote.detalleCompra.producto.codigo_barra}</TableCell>
                       <TableCell>
                         {new Date(lote.fecha_ingreso).toLocaleDateString()}
                       </TableCell>

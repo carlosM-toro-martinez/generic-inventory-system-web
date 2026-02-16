@@ -23,6 +23,7 @@ const RegistroTableComponent = ({
   setRegistroCombinado,
   handleFinalize,
   numeroLote,
+  isFinalizing
 }) => {
   const { user } = useContext(MainContext);
 
@@ -108,10 +109,7 @@ const RegistroTableComponent = ({
           <TableHead style={{ backgroundColor: "#f5f5f5", width: "100%" }}>
             <TableRow>
               <TableCell style={{ fontWeight: "bold" }}>Producto</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>Lote</TableCell>
-              <TableCell style={{ fontWeight: "bold" }}>
-                Fecha Caducidad
-              </TableCell>
+              {/* <TableCell style={{ fontWeight: "bold" }}>Lote</TableCell> */}
               <TableCell style={{ fontWeight: "bold" }}>Cantidad</TableCell>
               <TableCell style={{ fontWeight: "bold" }}>
                 Precio Unitario (compra)
@@ -126,14 +124,11 @@ const RegistroTableComponent = ({
                 <TableCell style={{ textTransform: "capitalize" }}>
                   {registro?.producto}
                 </TableCell>
-                <TableCell style={{ textTransform: "capitalize" }}>
+                {/* <TableCell style={{ textTransform: "capitalize" }}>
                   {registro?.numero_lote}
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
-                  {new Date(registro?.fecha_caducidad).toLocaleDateString()}
-                </TableCell>
-                <TableCell>
-                  {`${registro?.cantidad} - ${registro?.subCantidad}`}
+                  {`${registro?.cantidad}`}
                   {"u"}
                 </TableCell>
                 <TableCell>{registro?.precio_unitario} Bs</TableCell>
@@ -168,6 +163,7 @@ const RegistroTableComponent = ({
       <Box style={{ display: "flex", justifyContent: "center", gap: 10 }}>
         <Button
           variant="contained"
+          disabled={isFinalizing}
           onClick={registroCombinado.length > 0 ? handleRoute : handleCancelar}
           style={{
             marginTop: "20px",

@@ -264,7 +264,7 @@ function VentaRow({ venta, ventaToday, refetchVentas, caja, utilidades }) {
   });
   const classes = useStyles();
 
-  const ventaMutation = useMutation(
+  const anularMutation = useMutation(
     (payload) => anularVentaAddService(payload),
     {
       onSuccess: () => {
@@ -315,7 +315,7 @@ function VentaRow({ venta, ventaToday, refetchVentas, caja, utilidades }) {
       ];
     }
 
-    ventaMutation.mutate(transformVenta);
+    anularMutation.mutate(transformVenta);
   };
   const soloHora = new Date(venta?.fecha_venta).toLocaleTimeString();
 
@@ -350,6 +350,7 @@ function VentaRow({ venta, ventaToday, refetchVentas, caja, utilidades }) {
                 variant="contained"
                 color="primary"
                 onClick={() => handleAnularVenta(venta)}
+                disabled={anularMutation.isLoading}
                 sx={{ backgroundColor: "red", fontWeight: "bold" }}
               >
                 ANULAR VENTA
@@ -389,7 +390,7 @@ function VentaRow({ venta, ventaToday, refetchVentas, caja, utilidades }) {
                 <TableBody>
                   {venta.detallesVenta.map((detalle, index) => (
                     <TableRow key={index}>
-                      <TableCell>{detalle?.producto?.nombre}</TableCell>
+                      <TableCell>{`${detalle?.producto?.nombre} - ${detalle?.producto?.codigo_barra}`}</TableCell>
                       {/* <TableCell>{detalle.cantidad}</TableCell> */}
                       <TableCell>{detalle.subCantidad}</TableCell>
                       <TableCell sx={{ textTransform: "capitalize" }}>
