@@ -65,6 +65,7 @@ function ReportVentasComponent() {
       setFechasAgrupadas(Object.values(agrupadosPorFecha));
     }
   }, [ventas]);
+console.log(fechasAgrupadas);
 
   return (
     <DrawerComponent>
@@ -101,7 +102,7 @@ function ReportVentasComponent() {
                 onChange={handleInicioChange}
               >
                 {fechasAgrupadas?.map((fecha) => (
-                  <MenuItem key={fecha.fecha} value={fecha.primerosId}>
+                  <MenuItem key={fecha.fecha} value={fecha.ultimosId}>
                     {fecha.fecha}
                   </MenuItem>
                 ))}
@@ -117,7 +118,7 @@ function ReportVentasComponent() {
                 onChange={handleFinalChange}
               >
                 {fechasAgrupadas?.map((fecha) => (
-                  <MenuItem key={fecha.fecha} value={fecha.ultimosId}>
+                  <MenuItem key={fecha.fecha} value={fecha.primerosId}>
                     {fecha.fecha}
                   </MenuItem>
                 ))}
